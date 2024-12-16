@@ -25,8 +25,8 @@ dependencies {
     val hibernateVersion = "6.6.0.Final"
 
     compileOnly("dev.folia:folia-api:1.20.1-R0.1-SNAPSHOT")
-
-    compileOnly(files("$rootDir/gradle/libs/PlayerPoints-3.2.7.jar"))
+    compileOnly("com.github.decentsoftware-eu:decentholograms:2.8.12")
+    compileOnly("me.lucko:helper:5.6.14")
 
     // kotlin
     library(kotlin("stdlib"))
@@ -77,8 +77,8 @@ tasks.compileKotlin.configure {
 
 paper {
     version = "1.0"
-    main = "ru.lewis.example.bootstrap.Bootstrap"
-    loader = "ru.lewis.example.bootstrap.Loader"
+    main = "ru.lewis.cases.bootstrap.Bootstrap"
+    loader = "ru.lewis.cases.bootstrap.Loader"
     apiVersion = "1.20"
     author = "Lewis Carrol"
     generateLibrariesJson = true
@@ -87,5 +87,6 @@ paper {
 
     serverDependencies {
         register("helper") { load = PaperPluginDescription.RelativeLoadOrder.BEFORE }
+        register("DecentHolograms") { load = PaperPluginDescription.RelativeLoadOrder.BEFORE }
     }
 }
