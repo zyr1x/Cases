@@ -60,7 +60,7 @@ class ActiveBox(
 
     private fun createHologram() {
 
-        val hologramLocation = location.clone().add(0.5, hologramLines.size * 0.9, 0.5)
+        val hologramLocation = location.clone().add(0.5, (hologramLines.size+1) * 0.5, 0.5)
         hologram = DHAPI.createHologram(UUID.randomUUID().toString(), hologramLocation)
 
         val hologramPage = hologram.getPage(0)
