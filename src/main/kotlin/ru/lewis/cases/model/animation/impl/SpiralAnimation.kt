@@ -5,6 +5,7 @@ import eu.decentsoftware.holograms.api.holograms.Hologram
 import eu.decentsoftware.holograms.api.holograms.HologramLine
 import eu.decentsoftware.holograms.api.utils.items.HologramItem
 import org.bukkit.Color
+import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.Sound
 import org.bukkit.entity.Player
@@ -69,8 +70,19 @@ class SpiralAnimation(
             val hologram = DHAPI.createHologram(UUID.randomUUID().toString(), hologramLocation)
             val hologramPage = hologram.getPage(0)
             val hologramItem = HologramItem.fromItemStack(gift.itemTemplate.toItem())
+
+            val hologramLineTwo: HologramLine?
+
+            when (hologramItem.material) {
+                Material.PLAYER_HEAD -> {
+                    hologramLineTwo = HologramLine(hologramPage, hologramLocation, "#SMALLHEAD:" + hologramItem.content)
+                }
+                else -> {
+                    hologramLineTwo = HologramLine(hologramPage, hologramLocation, "#ICON:" + hologramItem.content)
+                }
+            }
+
             val hologramLineOne = HologramLine(hologramPage, hologramLocation, gift.name.asComponent().legacy())
-            val hologramLineTwo = HologramLine(hologramPage, hologramLocation, "#ICON:" + hologramItem.content)
             hologramPage.addLine(hologramLineOne)
             hologramPage.addLine(hologramLineTwo)
             holograms.add(hologram)

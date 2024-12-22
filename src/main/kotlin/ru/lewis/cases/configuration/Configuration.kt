@@ -32,7 +32,6 @@ data class Configuration(
         @ConfigSerializable
         data class Case(
             val id: Int = 1,
-            val name: MiniMessageComponent = "<green>Русская рулетка".asMiniMessageComponent(),
             val item: ItemTemplate = ItemTemplate(Material.CHEST),
             val gifts: List<Gift> = listOf(
                 Gift()
@@ -45,12 +44,8 @@ data class Configuration(
                 val chance: Int = 50,
                 val item: ItemTemplate = ItemTemplate(Material.DIAMOND_SWORD),
                 val title: TitleConfiguration = TitleConfiguration("WOW!", "да ты крут..."),
-                val commandsOnConsole: List<String>? = listOf(
-                    "kill <player>"
-                ),
-                val items: List<ItemTemplate>? = listOf(
-                    ItemTemplate(Material.DIAMOND_SWORD)
-                )
+                val commandsOnConsole: List<String>? = null,
+                val items: List<ItemTemplate>? = null
             )
         }
 

@@ -20,6 +20,12 @@ class BoxManager @Inject constructor(
     private val boxes: MutableList<ActiveBox> = mutableListOf()
 
     override fun setup(p0: TerminableConsumer) {
+        reload()
+    }
+
+    fun reload() {
+
+        boxes.clear()
 
         val caseList: MutableList<CaseData> = mutableListOf()
         configurationService.config.boxList.forEach {
@@ -27,7 +33,6 @@ class BoxManager @Inject constructor(
                 caseList.add(
                     CaseData(
                         case.id,
-                        case.name,
                         case.gifts.map { gift ->
                             Gift(
                                 gift.name,
@@ -58,6 +63,7 @@ class BoxManager @Inject constructor(
         }
 
     }
+
 
     fun getBoxes() = boxes
 

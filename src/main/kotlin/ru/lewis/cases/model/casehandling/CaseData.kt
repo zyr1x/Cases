@@ -9,7 +9,6 @@ import kotlin.random.Random
 
 class CaseData(
     val id: Int,
-    val name: MiniMessageComponent,
     val giftList: List<Gift>,
     val item: ItemTemplate
 ) {
