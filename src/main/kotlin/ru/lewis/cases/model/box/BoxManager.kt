@@ -25,7 +25,10 @@ class BoxManager @Inject constructor(
 
     fun reload() {
 
-        boxes.clear()
+        if (boxes.isNotEmpty()) {
+            boxes.forEach { it.close() }
+            boxes.clear()
+        }
 
         val caseList: MutableList<CaseData> = mutableListOf()
         configurationService.config.boxList.forEach {

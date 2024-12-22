@@ -29,7 +29,8 @@ class CaseDataArgument @Inject constructor(
         argument: Argument<CaseData>?,
         context: SuggestionContext?
     ): SuggestionResult {
-        return SuggestionResult.of(boxList.map { it.id.toString() })
+        val casesId = boxList.flatMap { box -> box.caseList.map { it.id } }
+        return SuggestionResult.of(casesId.toString())
     }
 
 }
