@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.plugin.Plugin
 import ru.lewis.cases.configuration.type.ItemTemplate
 import ru.lewis.cases.model.animation.AbstractAnimation
-import ru.lewis.cases.model.animation.impl.SpiralAnimation
+import ru.lewis.cases.model.animation.impl.SpinAnimation
 import ru.lewis.cases.model.box.ActiveBox
 import ru.lewis.cases.model.casehandling.CaseData
 import ru.lewis.cases.model.casehandling.OpeningCase
@@ -64,7 +64,7 @@ class CaseButton(
         repository.setCase(data, player, count)
 
         val gift = data.getRandomGift()
-        val animation: AbstractAnimation = SpiralAnimation(plugin, box, player, data, gift)
+        val animation: AbstractAnimation = SpinAnimation(plugin, SpinAnimation.Position.Z_CORD, box, player, data, gift)
 
         OpeningCase(
             player, box, gift, animation, data

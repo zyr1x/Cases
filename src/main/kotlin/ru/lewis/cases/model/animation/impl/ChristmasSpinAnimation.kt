@@ -1,23 +1,17 @@
 package ru.lewis.cases.model.animation.impl
 
 import eu.decentsoftware.holograms.api.DHAPI
-import eu.decentsoftware.holograms.api.holograms.Hologram
-import eu.decentsoftware.holograms.api.holograms.HologramLine
-import eu.decentsoftware.holograms.api.utils.items.HologramItem
 import org.bukkit.Color
-import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
-import ru.lewis.cases.extension.legacy
 import ru.lewis.cases.model.animation.AbstractAnimation
 import ru.lewis.cases.model.box.ActiveBox
 import ru.lewis.cases.model.casehandling.CaseData
 import ru.lewis.cases.model.casehandling.Gift
-import java.util.UUID
 
-class SpiralAnimation(
+class ChristmasSpinAnimation(
     private val plugin: Plugin,
     override val box: ActiveBox,
     override val player: Player,
@@ -25,7 +19,6 @@ class SpiralAnimation(
     override val gift: Gift
 ) : AbstractAnimation(player, box, data, gift) {
 
-    private val holograms = mutableListOf<Hologram>() // Храним голограммы
     private val center = box.location.clone().add(0.5, 1.5, 0.5) // Центр вращения (над сундуком)
     private val radius = 2.0 // Радиус вращения
     private var currentSpeed = 0.4 // Начальная скорость вращения (радианы за тик)
@@ -58,7 +51,7 @@ class SpiralAnimation(
         // Расчет начальных позиций голограмм вокруг центра по вертикали
         val initialAngleStep = 2 * Math.PI / data.giftList.size
         val verticalStep = 1.0 // Расстояние между предметами по вертикали
-        data.giftList.forEachIndexed { index, gift ->
+        data.giftList.forEachIndexed { index, currentGift ->
             val itemAngle = index * initialAngleStep
             val x = radius * Math.cos(itemAngle)
             val z = radius * Math.sin(itemAngle)
@@ -66,26 +59,7 @@ class SpiralAnimation(
 
             val hologramLocation = center.clone().add(x, y, z)
 
-            // Создаем голограмму
-            val hologram = DHAPI.createHologram(UUID.randomUUID().toString(), hologramLocation)
-            val hologramPage = hologram.getPage(0)
-            val hologramItem = HologramItem.fromItemStack(gift.itemTemplate.toItem())
-
-            val hologramLineTwo: HologramLine?
-
-            when (hologramItem.material) {
-                Material.PLAYER_HEAD -> {
-                    hologramLineTwo = HologramLine(hologramPage, hologramLocation, "#SMALLHEAD:" + hologramItem.content)
-                }
-                else -> {
-                    hologramLineTwo = HologramLine(hologramPage, hologramLocation, "#ICON:" + hologramItem.content)
-                }
-            }
-
-            val hologramLineOne = HologramLine(hologramPage, hologramLocation, gift.name.asComponent().legacy())
-            hologramPage.addLine(hologramLineOne)
-            hologramPage.addLine(hologramLineTwo)
-            holograms.add(hologram)
+            createHologram(currentGift, hologramLocation)
         }
     }
 
@@ -102,8 +76,8 @@ class SpiralAnimation(
         currentSpeed = (0.1 + 0.3 * (remainingTicks / 200.0))
 
         // Обновляем позиции голограмм по вертикали
-        holograms.forEachIndexed { index, hologram ->
-            val itemAngle = angle + (index * (2 * Math.PI / holograms.size))
+        HOLOGRAMS.forEachIndexed { index, hologram ->
+            val itemAngle = angle + (index * (2 * Math.PI / HOLOGRAMS.size))
             val x = radius * Math.cos(itemAngle)
             val z = radius * Math.sin(itemAngle)
             val y = 1.5 + index * 1.0 // Увеличиваем вертикальное положение
@@ -127,7 +101,7 @@ class SpiralAnimation(
 
         // Остановка на последнем тике
         if (remainingTicks == 1) {
-            holograms.forEachIndexed { index, hologram ->
+            HOLOGRAMS.forEachIndexed { index, hologram ->
                 if (data.giftList[index] == gift) {
                     DHAPI.moveHologram(hologram, center.clone().add(0.0, 1.0, 0.0))
                 } else {
@@ -146,10 +120,7 @@ class SpiralAnimation(
             1.0f
         )
 
-        holograms.forEach { it.delete() }
-        holograms.clear()
-
-        box.openMenu(player)
+        deleteHolograms()
     }
 
 }
