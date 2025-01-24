@@ -12,6 +12,7 @@ import org.bukkit.plugin.Plugin
 import ru.lewis.cases.configuration.type.MenuConfiguration
 import ru.lewis.cases.configuration.type.MiniMessageComponent
 import ru.lewis.cases.configuration.type.import
+import ru.lewis.cases.configuration.type.playAnim
 import ru.lewis.cases.extension.legacy
 import ru.lewis.cases.model.casehandling.CaseData
 import ru.lewis.cases.model.menu.CaseButton
@@ -87,7 +88,7 @@ class ActiveBox(
 
         Window.single().apply {
 
-            import(menu.template) {
+            val gui = import(menu.template) {
 
                 addIngredient('<', PreviousPageButton(menu.buttons['<']?.toItem() ?: throw IllegalArgumentException("Конфигурация бокса настроена неправильно!")))
                 addIngredient('>', NextPageButton(menu.buttons['>']?.toItem() ?: throw IllegalArgumentException("Конфигурация бокса настроена неправильно!")))
@@ -107,7 +108,9 @@ class ActiveBox(
                     }
                 )
             }
-        }.open(player)
+            open(player)
+            gui.playAnim()
+        }
     }
 
     fun open() {
