@@ -57,7 +57,7 @@ class CaseButton(
                 return
             }
 
-            if (it > 0) {
+            if (it <= 0) {
                 player.closeInventory()
                 player.playSound(
                     player.location,
