@@ -18,6 +18,7 @@ class BoxManager @Inject constructor(
 ) : TerminableModule {
 
     private val boxes: MutableList<ActiveBox> = mutableListOf()
+    private val loadingItem get() = configurationService.config.loadingItem
 
     override fun setup(p0: TerminableConsumer) {
         reload()
@@ -60,7 +61,8 @@ class BoxManager @Inject constructor(
                     caseList,
                     it.menu,
                     repository,
-                    it.hologram
+                    it.hologram,
+                    loadingItem
                 )
             )
         }

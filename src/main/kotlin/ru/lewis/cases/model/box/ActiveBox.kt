@@ -9,15 +9,12 @@ import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.plugin.Plugin
-import ru.lewis.cases.configuration.type.MenuConfiguration
-import ru.lewis.cases.configuration.type.MiniMessageComponent
-import ru.lewis.cases.configuration.type.import
-import ru.lewis.cases.configuration.type.playAnim
+import ru.lewis.cases.configuration.type.*
 import ru.lewis.cases.extension.legacy
 import ru.lewis.cases.model.casehandling.CaseData
-import ru.lewis.cases.model.menu.CaseButton
-import ru.lewis.cases.model.menu.NextPageButton
-import ru.lewis.cases.model.menu.PreviousPageButton
+import ru.lewis.cases.model.menu.button.CaseButton
+import ru.lewis.cases.model.menu.button.NextPageButton
+import ru.lewis.cases.model.menu.button.PreviousPageButton
 import ru.lewis.cases.repositry.CasesRepository
 import xyz.xenondevs.invui.window.Window
 import java.util.UUID
@@ -28,7 +25,8 @@ class ActiveBox(
     val caseList: List<CaseData>,
     val menu: MenuConfiguration,
     val repository: CasesRepository,
-    val hologramLines: List<MiniMessageComponent>
+    val hologramLines: List<MiniMessageComponent>,
+    val loadingItem: ItemTemplate
 ) {
 
     private var isOpening: Boolean = false
@@ -103,7 +101,8 @@ class ActiveBox(
                             it,
                             box,
                             repository,
-                            player
+                            player,
+                            loadingItem
                         )
                     }
                 )

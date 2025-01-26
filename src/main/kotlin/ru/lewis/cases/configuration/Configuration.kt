@@ -10,7 +10,8 @@ data class Configuration(
     val boxList: List<Box> = listOf(
         Box()
     ),
-    val database: DatabaseConfiguration = DatabaseConfiguration()
+    val database: DatabaseConfiguration = DatabaseConfiguration(),
+    val loadingItem: ItemTemplate = ItemTemplate(Material.BARRIER)
 ) {
 
     @ConfigSerializable
