@@ -7,6 +7,7 @@ import dev.rollczi.litecommands.annotations.execute.Execute
 import dev.rollczi.litecommands.annotations.permission.Permission
 import jakarta.inject.Inject
 import org.bukkit.Sound
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import ru.lewis.cases.model.casehandling.CaseData
 import ru.lewis.cases.repositry.CasesRepository
@@ -18,14 +19,10 @@ class CaseGiveCommand @Inject constructor(
 ){
 
     @Execute(name = "give")
-    fun execute(@Context sender: Player, @Arg target: Player, @Arg data: CaseData, @Arg amount: Int) {
+    fun execute(@Arg target: Player, @Arg data: CaseData, @Arg amount: Int) {
 
         val count = repository.getCaseCount(data, target) + amount
         repository.setCase(data, target, count)
-
-        sender.playSound(
-            sender.location, Sound.ENTITY_VILLAGER_YES, 1.0f, 1.0f
-        )
 
     }
 
