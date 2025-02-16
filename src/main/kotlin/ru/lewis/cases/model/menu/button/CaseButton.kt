@@ -71,7 +71,7 @@ class CaseButton(
             repository.setCase(data, player, it - 1)
 
             val gift = data.getRandomGift()
-            val animation: AbstractAnimation = SpinAnimation(plugin, SpinAnimation.Position.X_CORD, box, player, data, gift)
+            val animation: AbstractAnimation = SpinAnimation(plugin, SpinAnimation.Position.Z_CORD, box, player, data, gift)
 
             OpeningCase(
                 player, box, gift, animation, data
